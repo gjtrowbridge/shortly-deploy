@@ -32,3 +32,4 @@ node_modules
 combined.js
 azure.err
 public/dist
+public/client
