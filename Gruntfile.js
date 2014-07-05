@@ -2,7 +2,20 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     concat: {
+      dist: {
+        src: [
+              'public/client/app.js',
+              'public/client/link.js',
+              'public/client/links.js',
+              'public/client/linkView.js',
+              'public/client/linksView.js',
+              'public/client/createLinkView.js',
+              'public/client/router.js'
+              ],
+        dest: 'public/client/combined.js',
+      }
     },
 
     mochaTest: {
@@ -21,6 +34,17 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        mangle: true,
+        compress: {
+          drop_console: true
+        }
+      },
+      dist: {
+        files: {
+          'public/dist/app.js': ['public/client/combined.js']
+        }
+      }
     },
 
     jshint: {
@@ -38,6 +62,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      dist: {
+        files: {
+          'public/dist/style.css': ['public/style.css']
+        }
+      }
     },
 
     watch: {
@@ -94,6 +123,9 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'concat',
+    'uglify',
+    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -106,6 +138,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'build',
+    'upload'
   ]);
 
 
