@@ -42,17 +42,27 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/dist/app.js': ['public/client/combined.js']
+          'public/dist/app.js': [
+              'public/client/app.js',
+              'public/client/link.js',
+              'public/client/links.js',
+              'public/client/linkView.js',
+              'public/client/linksView.js',
+              'public/client/createLinkView.js',
+              'public/client/router.js'
+              ]
         }
       }
     },
 
     jshint: {
-      files: [
-        // Add filespec list here
-      ],
+      files: {
+        src: [
+              'Gruntfile.js',
+              'public/client/*.js'
+              ]
+      },
       options: {
-        force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
@@ -123,6 +133,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
+    'test',
     'concat',
     'uglify',
     'cssmin'
@@ -131,6 +143,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      console.log('production')
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -142,5 +155,8 @@ module.exports = function(grunt) {
     'upload'
   ]);
 
-
+  grunt.registerTask('default', function() {
+    grunt.option('prod', true);
+    grunt.task.run([ 'upload' ]);
+  });
 };
