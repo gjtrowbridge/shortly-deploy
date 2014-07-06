@@ -42,15 +42,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/dist/app.js': [
-              'public/client/app.js',
-              'public/client/link.js',
-              'public/client/links.js',
-              'public/client/linkView.js',
-              'public/client/linksView.js',
-              'public/client/createLinkView.js',
-              'public/client/router.js'
-              ]
+          'public/dist/app.js': ['public/client/*.js']
         }
       }
     },
@@ -135,7 +127,6 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'jshint',
     'test',
-    'concat',
     'uglify',
     'cssmin'
   ]);
